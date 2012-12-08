@@ -24,12 +24,35 @@
 	</ul>
 </template>
 
+<template name="admin">
+	<h2>Vote Administrator</h2>
+
+	{{#each votes}}
+		<div class="vote-admin-container">
+			<h3>{{question}}</h3>
+
+			<ul class="vote-admin-participant-list">
+				{{#each participants}}
+					<li>
+						<p class="participant-list-email">{{email}}</p>
+						<select name="option-select">
+							{{#each vote_options}}
+						  	<option value="{{option_value}}">{{option_name}}</option>
+						  	{{/each}}
+						</select>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+	{{/each}}
+</template>
+
 <template name="vote">
 	<h1>Vote Page</h1>
 	
 	{{#each votes}}
 		{{#each_with_index options}}
-			<p class="vote-option {{#if has_vote}}is-chosen{{/if}}" data-option-index="{{index}}">{{option}}</p>
+			<p class="vote-option {{#if has_vote}}is-chosen {{/if}}{{#if is_winner}}is-winner{{/if}}" data-option-index="{{index}}">{{option}}</p>
 		{{/each_with_index}}
 	{{/each}}
 
@@ -45,4 +68,5 @@
 			</li>
 		{{/each}}
 	</ul>
+
 </template>

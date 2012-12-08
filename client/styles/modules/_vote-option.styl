@@ -4,13 +4,15 @@
 .vote-option {
   display: inline-block;
   margin: 3em 2em;
-  padding-top: 5.3em;
-  width: 12em;
-  height: 12em;
+  padding-top: 3.5em;
+  width: 9em;
+  height: 9em;
   background-color: #ccc;
   text-align: center;
   border-radius(100%);
   cursor: pointer;
+  position: relative;
+  typeset(20);
 }
 
 .vote-option:hover {
@@ -18,9 +20,35 @@
   color: #fff;
 }
 
+/* Pseduo:after styling for chosen and winner votes */
 /* Chosen Vote */
+
+.vote-option.is-chosen:after,
+.vote-option.is-winner:after {
+  position: absolute;
+  bottom: 3.7em;
+  width: 100%;
+  display: block;
+  text-align: center;
+  typeset(13);
+  text-transform: uppercase;
+}
+
 
 .vote-option.is-chosen {
   color: #fff;
   background-color: #fc3c45;
+
+  &:after {
+    content: 'Your Pick';
+  }
+}
+
+.vote-option.is-winner {
+  color: #fff;
+  background-color: #7600fb;
+
+  &:after {
+    content: 'The Winner!';
+  }
 }

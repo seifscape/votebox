@@ -8,9 +8,14 @@ Meteor.publish 'votes', (vote_id) ->
     return Votes.find({'users.id': this.userId})
 
 # Publishing select data for all users
-Meteor.publish 'directory', ->
-  return Meteor.users.find({}, {fields: {emails: 1, profile: 1, name: 1}})
-
+Meteor.publish 'directory', (vote_id) ->
+  if vote_id?
+    vote = Votes.findOne({_id: vote_id})
+    return if not vote
+    validIdsArray = _.pluck vote.users, 'id'
+    return Meteor.users.find(_id: {$in: validIdsArray}, {fields: {emails: 1, profile: 1, name: 1}})
+  else
+    return Meteor.users.find({}, {fields: {emails: 1, profile: 1, name: 1}})
 Meteor.startup ->
 
   unless Votes.find().count()
