@@ -1,0 +1,48 @@
+<head>
+	<title>VoteBox</title>
+
+	<script type="text/javascript" src="//use.typekit.net/mbd7iae.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+	{{loginButtons}}
+	<div id="container">
+		{{renderPage}}
+	</div>
+</body>
+
+<template name="main">
+	<h1>Main Page</h1>
+	
+	<ul class="vote-list">
+	{{#each votes}}
+		<li><a href="vote/{{_id}}" class="vote">{{question}}</a></li>
+	{{/each}}
+	</ul>
+</template>
+
+<template name="vote">
+	<h1>Vote Page</h1>
+	
+	{{#each votes}}
+		{{#each_with_index options}}
+			<p class="vote-option {{#if has_vote}}is-chosen{{/if}}" data-option-index="{{index}}">{{option}}</p>
+		{{/each_with_index}}
+	{{/each}}
+
+	<h2>Participants:</h2>
+
+	<ul>
+		{{#each participants}}
+			<li>
+				<span class="participant-email">{{email}}</span>
+				<span class="participant-voting-status">
+					{{vote_status}}
+				</span>
+			</li>
+		{{/each}}
+	</ul>
+</template>

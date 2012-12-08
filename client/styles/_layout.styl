@@ -1,0 +1,40 @@
+/*  === General Styles ===
+    ================================================= */
+
+#container {
+
+	width: 75%;
+  text-align: center;
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+/**
+
+Mobile-first styling should exist in this file, or be broken out
+into individual files (e.g. _nav.scss).
+
+These styles should be overridden for larger screens in _media-queries.scss
+
+Alternatively, SASS 3.2 and up can use nested media queries like so:
+
+@mixin breakpoint($point) {
+ @if $point == mq-large {
+   @media (max-width: 1600px) { @content; }
+ }
+ @if $point == mq-medium {
+   @media (max-width: 1250px) { @content; }
+ }
+ @else if $point == mq-small {
+   @media (max-width: 650px)  { @content; }
+ }
+}
+
+#content {
+  width: 75%; 
+  @include breakpoint(mq-large) { width: 60%; }
+  @include breakpoint(mq-medium) { width: 80%; }
+  @include breakpoint(mq-small) { width: 95%; }
+}
+
+*/

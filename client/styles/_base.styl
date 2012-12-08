@@ -1,0 +1,93 @@
+/*  === Body ===
+    ================================================= */
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 3em;
+  altfont-light();
+  typeset(15, 1.6);
+  color: text-color;
+}
+
+/*  === Headings ===
+    ================================================= */
+
+h1 {
+  margin-top: 55px;
+  margin-bottom: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  typeset(42, 1.0);
+  basefont-bold();
+
+  @media screen and (min-width: 760px) {
+    typeset(56);
+  }
+}
+
+h2 {
+  position: relative;
+  margin-bottom: 35px;
+  padding-bottom: 35px;
+  text-align: center;
+  text-transform: uppercase;
+  typeset(15);
+  altfont-regular-oblique();
+
+  &:after {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    display: block;
+    margin-left: -45px;
+    width: 90px;
+    height: 1px;
+    background-color: blue-gray-light;
+    content: "";
+  }
+}
+
+h3 {
+
+}
+
+h4 {
+
+}
+
+h5 {
+
+}
+
+h6 {
+
+}
+
+/*  === Paragraphs ===
+    ================================================= */
+
+p {
+  margin-bottom: 40px
+}
+
+/*  === Links ===
+    ================================================= */
+
+a { color: link-color; text-decoration: underline; }
+a:hover {  }
+
+
+/*  === Text Selection ===
+    ================================================= */
+
+::-moz-selection { background: selection-color; color: #fff; text-shadow: none; }
+::selection { background: selection-color; color: #fff; text-shadow: none; }
+
+
+/*  === Border Box Default ===
+    ================================================= */
+    
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }

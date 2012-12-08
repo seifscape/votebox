@@ -1,0 +1,47 @@
+/*  === Fonts ===
+    ================================================= */
+
+/* Example use: @extends .basefont-bold */
+
+basefont() {
+  font-family: "futura-pt", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+basefont-bold() {
+  basefont();
+  font-weight: 700;
+}
+
+altfont() {
+  font-family: "proxima-nova", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+altfont-light() {
+  altfont();
+  font-weight: 300;
+}
+
+altfont-regular-oblique() {
+  altfont();
+  font-weight: 400;
+  font-style: italic;
+}
+
+
+/*  === Font Sizes ===
+    ================================================= */
+
+/* All font sizes should be provided as rems, with a 
+ * pixel fallback for older browsers. */
+ 
+/* Example use: typeset(14) */
+
+typeset(font-size = 16, line-height = auto) {
+  font-size: font-size px;
+  font-size: (font-size / 10) rems;
+  line-height: line-height;
+}
