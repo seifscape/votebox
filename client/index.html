@@ -9,13 +9,14 @@
 
 <body>
 	{{loginButtons}}
+	<a href="/admin" class="admin-link">Vote Administration</a>
 	<div id="container">
 		{{renderPage}}
 	</div>
 </body>
 
 <template name="main">
-	<h1>Main Page</h1>
+	<h1>Your Votes</h1>
 	
 	<ul class="vote-list">
 	{{#each votes}}
@@ -35,11 +36,11 @@
 				{{#each participants}}
 					<li>
 						<p class="participant-list-email">{{email}}</p>
-						<select data-vote-id="{{../_id}}" class="option-select">
+						<select name="option-select" data-vote-id="{{../_id}}" class="option-select">
 							{{#each ../options}}
-						  	<option value="{{option}}">{{option}}</option>
+						  	<option value="{{option}}" class="{{is_selected_option}}">{{option}}</option>
 						  	{{/each}}
-						  	<option value="None">None</option>
+						  	<option value="None" class="{{is_selected_option}}">None</option>
 						</select>
 					</li>
 				{{/each}}

@@ -17,19 +17,15 @@ Template.vote.has_vote = ->
 	userVote = findUserVote(Meteor.userId())
 	return userVote.vote? and Math.round(userVote.vote) is this.index
 
-Template.vote.are_all_votes_in = ->
-	allVotes = getValidUsers()
-	return  _.every allVotes, (user) ->
-		user.vote?
-
 Template.vote.is_winner = ->
+	return if not areAllVotesIn()
 	voteTotals = tabulateVotes()
 	maxVoteIndex = voteTotals.indexOf(_.max(voteTotals))
-	return maxVoteIndex is this.index
+	return maxVoteIndex is this.index and doesMajorityVoteExist()
 
 ## EVENTS
 
 Template.vote.events
 	'click .vote-option': (evt) ->
-		voteIndex = $(evt.target).attr('data-option-index')
+		voteIndex = Math.round($(evt.target).attr('data-option-index'))
 		Meteor.call('setUserVote', Session.get('vote_id'), Meteor.userId(), voteIndex);

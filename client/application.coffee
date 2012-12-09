@@ -9,7 +9,7 @@ Meteor.Router.add
 		Session.set('vote_id', null)
 		return 'main'
 
-	'/admin/': ->
+	'/admin': ->
 		Session.set('vote_id', null)
 		return 'admin'
 
