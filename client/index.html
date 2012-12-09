@@ -35,10 +35,11 @@
 				{{#each participants}}
 					<li>
 						<p class="participant-list-email">{{email}}</p>
-						<select name="option-select">
-							{{#each vote_options}}
-						  	<option value="{{option_value}}">{{option_name}}</option>
+						<select data-vote-id="{{../_id}}" class="option-select">
+							{{#each ../options}}
+						  	<option value="{{option}}">{{option}}</option>
 						  	{{/each}}
+						  	<option value="None">None</option>
 						</select>
 					</li>
 				{{/each}}
@@ -58,13 +59,10 @@
 
 	<h2>Participants:</h2>
 
-	<ul>
+	<ul class="vote-participant-list">
 		{{#each participants}}
-			<li>
+			<li {{#if has_user_voted}}class="has-voted"{{/if}}>
 				<span class="participant-email">{{email}}</span>
-				<span class="participant-voting-status">
-					{{vote_status}}
-				</span>
 			</li>
 		{{/each}}
 	</ul>

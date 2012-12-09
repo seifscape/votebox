@@ -1,7 +1,9 @@
 ## WORKING WITH VOTES AND USERS
 
 findUserVote = (userId) ->
-	return _.find Votes.findOne().users, (obj, index) ->
+	vote = Votes.findOne()
+	return if not vote?
+	return _.find vote.users, (obj, index) ->
 		return obj.id is userId
 
 getValidUsers = ->

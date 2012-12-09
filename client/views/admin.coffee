@@ -1,7 +1,7 @@
 ## TEMPLATING
 
 Template.admin.votes = ->
-	vote = Votes.find({})
+	votes = Votes.find()
 
 Template.admin.participants = ->
 	Meteor.users.find()
@@ -9,12 +9,12 @@ Template.admin.participants = ->
 Template.admin.email = ->
 	this.emails[0].address
 
-Template.admin.vote_options = ->
-
-
 ## EVENTS
 
 Template.admin.events
-	'click .vote-option': (evt) ->
-		voteIndex = $(evt.target).attr('data-option-index')
-		Meteor.call('setUserVote', Session.get('vote_id'), voteIndex);
+	'change .option-select': (evt) ->
+		voteId = $(evt.target).attr('data-vote-id')
+		voteIndex = evt.target.selectedIndex
+		voteIndex = null if evt.target.value is 'None'
+
+		Meteor.call('setUserVote', voteId, this._id, voteIndex)

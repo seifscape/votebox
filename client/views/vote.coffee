@@ -1,7 +1,7 @@
 ## TEMPLATING
 
 Template.vote.votes = ->
-	vote = Votes.find({})
+	votes = Votes.find()
 
 Template.vote.participants = ->
 	Meteor.users.find()
@@ -9,9 +9,9 @@ Template.vote.participants = ->
 Template.vote.email = ->
 	this.emails[0].address
 
-Template.vote.vote_status = ->
+Template.vote.has_user_voted = ->
 	userVote = findUserVote(this._id)
-	if userVote.vote? then 'Voted!' else 'Waiting...'
+	return userVote? and userVote.vote?
 
 Template.vote.has_vote = ->
 	userVote = findUserVote(Meteor.userId())
@@ -32,4 +32,4 @@ Template.vote.is_winner = ->
 Template.vote.events
 	'click .vote-option': (evt) ->
 		voteIndex = $(evt.target).attr('data-option-index')
-		Meteor.call('setUserVote', Session.get('vote_id'), voteIndex);
+		Meteor.call('setUserVote', Session.get('vote_id'), Meteor.userId(), voteIndex);

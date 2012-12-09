@@ -3,21 +3,23 @@
 
 .vote-option {
   display: inline-block;
-  margin: 3em 2em;
-  padding-top: 3.5em;
-  width: 9em;
-  height: 9em;
+  margin: 1em 2em;
+  padding-top: 4.0em;
+  width: 11em;
+  height: 11em;
   background-color: #ccc;
   text-align: center;
   border-radius(100%);
   cursor: pointer;
   position: relative;
   typeset(20);
+  border: 0.6em solid #fff;
 }
 
 .vote-option:hover {
-  background-color: #333;
+  background-color: #aaa;
   color: #fff;
+  border-color: #333;
 }
 
 /* Pseduo:after styling for chosen and winner votes */
@@ -26,7 +28,7 @@
 .vote-option.is-chosen:after,
 .vote-option.is-winner:after {
   position: absolute;
-  bottom: 3.7em;
+  bottom: 4.5em;
   width: 100%;
   display: block;
   text-align: center;
