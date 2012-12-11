@@ -14,16 +14,16 @@ Meteor.methods
 			)
 
 	resetUserVotes: (vote_id) ->
-		# TODO: Each vote should have a creator id attach
-		# and this method should check to see if the current
-		# userId matches the creator id, otherwise error
+		vote = Votes.findOne({_id: vote_id})
 
 		if not this.userId
 			throw new Meteor.Error(403, 'You must be logged in to modify votes.')
+
+		if this.userId is not vote.creator_id
+			throw new Meteor.Error(403, 'You cannot clear votes that you did not create.')
+
 		
 		if Meteor.isServer
-			vote = Votes.findOne({_id: vote_id})
-
 			_.each vote.users, (user) ->
 				Votes.update(
 					{_id: vote_id, 'users.id': user.id},
