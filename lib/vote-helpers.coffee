@@ -1,13 +1,19 @@
 # Vote Helper Functions
 
+findVoteCreatorEmail = (voteId) ->
+	vote = if voteId then Votes.findOne({_id: voteId}) else Votes.findOne()
+	return if not vote?
+	creator = Meteor.users.findOne({_id: vote.creator_id})
+	return creator.emails[0].address
+
 findUserVote = (userId, voteId) ->
-	vote = if voteId then Votes.find({_id: voteId}) else Votes.findOne()
+	vote = if voteId then Votes.findOne({_id: voteId}) else Votes.findOne()
 	return if not vote?
 	return _.find vote.users, (obj, index) ->
 		return obj.id is userId
 
 getValidUsers = (voteId) ->
-	vote = if voteId then Votes.find({_id: voteId}) else Votes.findOne()
+	vote = if voteId then Votes.findOne({_id: voteId}) else Votes.findOne()
 	return if not vote
 	return vote.users
 

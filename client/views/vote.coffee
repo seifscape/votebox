@@ -6,6 +6,9 @@ Template.vote.votes = ->
 Template.vote.participants = ->
 	Meteor.users.find()
 
+Template.vote.creator_email = ->
+	findVoteCreatorEmail()
+
 Template.vote.email = ->
 	this.emails[0].address
 
