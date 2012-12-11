@@ -31,16 +31,17 @@
 	{{#each votes}}
 		<div class="vote-admin-container">
 			<h3>{{question}}</h3>
+			<button type="button" class="reset-votes-button">Reset Votes</button>
 
 			<ul class="vote-admin-participant-list">
 				{{#each participants}}
 					<li>
 						<p class="participant-list-email">{{email}}</p>
 						<select name="option-select" data-vote-id="{{../_id}}" class="option-select">
-							{{#each ../options}}
-						  	<option value="{{option}}" class="{{is_selected_option}}">{{option}}</option>
-						  	{{/each}}
-						  	<option value="None" class="{{is_selected_option}}">None</option>
+							{{#each_with_index ../options}}
+						  	<option value="{{option}}" data-option-index="{{index}}" {{#if is_selected_option}}selected{{/if}}>{{option}}</option>
+						  	{{/each_with_index}}
+						  	<option value="None" {{#if is_selected_option}}selected{{/if}}>None</option>
 						</select>
 					</li>
 				{{/each}}

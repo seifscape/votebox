@@ -28,6 +28,7 @@ Meteor.startup ->
     _.each [
       {
         question: 'What should we have for lunch?'
+        creator_id: '8bffafa7-8736-4c4b-968e-82900b82c266'
         options: [
           {
             option: 'Indian'

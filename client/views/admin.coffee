@@ -15,7 +15,6 @@ Template.admin.is_selected_option = ->
 	userVote = findUserVote(this._id)
 	return if not userVote?
 	userVote = if not userVote.vote? then null else userVote.vote
-	console.log 'this', this
 
 ## EVENTS
 
@@ -26,3 +25,6 @@ Template.admin.events
 		voteIndex = null if evt.target.value is 'None'
 
 		Meteor.call('setUserVote', voteId, this._id, voteIndex)
+
+	'click .reset-votes-button': (evt) ->
+		Meteor.call('resetUserVotes', this._id)

@@ -1,13 +1,13 @@
 # Vote Helper Functions
 
-findUserVote = (userId) ->
-	vote = Votes.findOne()
+findUserVote = (userId, voteId) ->
+	vote = if voteId then Votes.find({_id: voteId}) else Votes.findOne()
 	return if not vote?
 	return _.find vote.users, (obj, index) ->
 		return obj.id is userId
 
-getValidUsers = ->
-	vote = Votes.findOne()
+getValidUsers = (voteId) ->
+	vote = if voteId then Votes.find({_id: voteId}) else Votes.findOne()
 	return if not vote
 	return vote.users
 
