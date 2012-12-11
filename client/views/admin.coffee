@@ -1,7 +1,7 @@
 ## TEMPLATING
 
 Template.admin.votes = ->
-	votes = Votes.find()
+	votes = Votes.find({creator_id: Meteor.userId()})
 
 Template.admin.participants = ->
 	Meteor.users.find()
