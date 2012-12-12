@@ -14,7 +14,7 @@ findUserVote = (userId, voteId) ->
 
 getValidUsers = (voteId) ->
 	vote = if voteId then Votes.findOne({_id: voteId}) else Votes.findOne()
-	return if not vote
+	return if not vote?
 	return vote.users
 
 getValidVoteUserIds = ->

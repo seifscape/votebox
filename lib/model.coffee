@@ -30,14 +30,14 @@ Meteor.methods
 					{$set: {'users.$.vote': null}}
 				)
 
-	createNewVote: ->
+	createNewVote: (question) ->
 		if not this.userId
 			throw new Meteor.Error(403, 'You must be logged in to create votes.')
 
 		if Meteor.isServer
 			Votes.insert(
 				{
-					question: 'Your Question Title',
+					question: question,
 					options: [
 						{
 							option: 'Option A'

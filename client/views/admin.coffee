@@ -30,7 +30,10 @@ Template.admin.events
 		Meteor.call('resetUserVotes', this._id)
 
 	'click .create-vote-button': (evt) ->
-		Meteor.call('createNewVote')
+		questionInput = $('.vote-question')
+		question = questionInput.val()
+		questionInput.val('')
+		Meteor.call('createNewVote', question)
 
 	'click .delete-vote-button': (evt) ->
 		Meteor.call('deleteVote', this._id)
