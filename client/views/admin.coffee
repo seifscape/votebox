@@ -4,7 +4,7 @@ Template.admin.votes = ->
 	votes = Votes.find({creator_id: Meteor.userId()})
 
 Template.admin.participants = ->
-	Meteor.users.find()
+	getValidVoteUsers(this._id)
 
 Template.admin.email = ->
 	this.emails[0].address
