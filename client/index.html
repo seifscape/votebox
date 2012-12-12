@@ -58,10 +58,9 @@
 </template>
 
 <template name="vote">
-	<h1>Vote Page</h1>
-
 	{{#each votes}}
 
+		<h1>{{question}}</h1>
 		<h2>Created by: {{creator_email}}</h2>
 
 		{{#each_with_index options}}
