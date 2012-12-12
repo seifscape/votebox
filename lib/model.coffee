@@ -29,3 +29,38 @@ Meteor.methods
 					{_id: vote_id, 'users.id': user.id},
 					{$set: {'users.$.vote': null}}
 				)
+
+	createNewVote: ->
+		if not this.userId
+			throw new Meteor.Error(403, 'You must be logged in to create votes.')
+
+		if Meteor.isServer
+			Votes.insert(
+				{
+					question: 'Your Question Title',
+					options: [
+						{
+							option: 'Option A'
+						}
+					],
+					creator_id: Meteor.userId(),
+					users: [
+						{
+							id: Meteor.userId(),
+							vote: null
+						}
+					]
+				}
+			)
+
+	deleteVote: (vote_id) ->
+		vote = Votes.findOne({_id: vote_id})
+
+		if not this.userId
+			throw new Meteor.Error(403, 'You must be logged in to delete votes.')
+
+		if this.userId is not vote.creator_id
+			throw new Meteor.Error(403, 'You cannot delete votes that you did not create.')
+
+		if Meteor.isServer
+			Votes.remove({_id: vote_id})

@@ -28,3 +28,9 @@ Template.admin.events
 
 	'click .reset-votes-button': (evt) ->
 		Meteor.call('resetUserVotes', this._id)
+
+	'click .create-vote-button': (evt) ->
+		Meteor.call('createNewVote')
+
+	'click .delete-vote-button': (evt) ->
+		Meteor.call('deleteVote', this._id)
