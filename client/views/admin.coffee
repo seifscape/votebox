@@ -29,11 +29,16 @@ Template.admin.events
 	'click .reset-votes-button': (evt) ->
 		Meteor.call('resetUserVotes', this._id)
 
-	'click .create-vote-button': (evt) ->
-		questionInput = $('.vote-question')
-		question = questionInput.val()
-		questionInput.val('')
-		Meteor.call('createNewVote', question)
+	'click .create-vote-button': (evt, template) ->
+		# Gather the values
+		question = $('.new-vote-question').val()
+		options = $('.new-vote-options').val().split(/[ ,]+/)
+		participants = $('.new-vote-participants').val().split(/[ ,]+/)
+
+		Meteor.call('createNewVote', question, options, participants)
+
+		# Clear inputs
+		$(evt.target).parent().find('input, textarea').val('')
 
 	'click .delete-vote-button': (evt) ->
 		Meteor.call('deleteVote', this._id)

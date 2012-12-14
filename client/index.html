@@ -52,7 +52,18 @@
 	{{/each}}
 
 	<div class="vote-admin-container">
-		<input type="text" name="vote-question" class="vote-question" placeholder="What is your question?" />
+		<h3>Create a New Vote</h3>
+
+		<h4>Your Question</h4>
+		<input type="text" name="new-vote-question" class="new-vote-question" placeholder="e.g. What's the best album ever?" />
+
+		<h4>Options</h4>
+		<textarea name="new-vote-options" class="new-vote-options" placeholder="e.g. Dark Side of the Moon"></textarea>
+
+		<h4>Participants</h4>
+		<textarea name="new-vote-participants" class="new-vote-participants" placeholder="e.g. johndoe@gmail.com"></textarea>
+
+
 		<button type="button" class="create-vote-button">Create a New Vote</button>
 	</div>
 </template>

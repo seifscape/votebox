@@ -30,26 +30,40 @@ Meteor.methods
 					{$set: {'users.$.vote': null}}
 				)
 
-	createNewVote: (question) ->
+	createNewVote: (question, optionsArray, participantsArray) ->
 		if not this.userId
 			throw new Meteor.Error(403, 'You must be logged in to create votes.')
+
+		options = _.map optionsArray, (option) ->
+			return {option: option}
+
+		# TODO: Participant email invites
+		# Send email invitations to each participant
 
 		if Meteor.isServer
 			Votes.insert(
 				{
 					question: question,
-					options: [
-						{
-							option: 'Option A'
-						}
-					],
+					options: options
 					creator_id: Meteor.userId(),
 					users: [
 						{
 							id: Meteor.userId(),
 							vote: null
 						}
-					]
+					],
+					invited_user_emails: participantsArray
+				}
+			)
+
+			# When this is deployed to votebox.meteor.com you can comment out the following line
+			process.env.MAIL_URL = 'smtp://postmaster%40cmal.mailgun.org:3ldr22afg917@smtp.mailgun.org:587'
+			Email.send(
+				{
+					from: 'chris@desktimeapp.com'
+					to: 'cmalven@chrismalven.com'
+					subject: 'Meteor Test'
+					html: '<h1>This is a test</h1><p>This is a test of the meteor email system.</p>'
 				}
 			)
 
