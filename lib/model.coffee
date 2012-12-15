@@ -34,36 +34,46 @@ Meteor.methods
 		if not this.userId
 			throw new Meteor.Error(403, 'You must be logged in to create votes.')
 
+		# Turn optionsArray into key/value pairs
 		options = _.map optionsArray, (option) ->
 			return {option: option}
 
-		# TODO: Participant email invites
-		# Send email invitations to each participant
+		# TODO: Email addresses from participants array that already exist in
+		# VoteBox should be immediately added to users, rather than to 'invited_user_emails'.
+
+		users = []
+		invited_user_emails = []
+
+		# For each in participantsArray, determine whether the user email already exists
+		# and if so immediately add them to the vote
+		_.each participantsArray, (participantEmail) ->
+			user = Meteor.users.findOne({'emails.0.address': participantEmail})
+			if user?
+				users.push {id: user._id, vote: null}
+			else
+				invited_user_emails.push participantEmail
+		users.push({id: Meteor.userId(), vote: null})
 
 		if Meteor.isServer
-			Votes.insert(
+			newVoteId = Votes.insert(
 				{
 					question: question,
 					options: options
 					creator_id: Meteor.userId(),
-					users: [
-						{
-							id: Meteor.userId(),
-							vote: null
-						}
-					],
-					invited_user_emails: participantsArray
+					users: users
+					invited_user_emails: invited_user_emails
 				}
 			)
 
 			# When this is deployed to votebox.meteor.com you can comment out the following line
 			process.env.MAIL_URL = 'smtp://postmaster%40cmal.mailgun.org:3ldr22afg917@smtp.mailgun.org:587'
+			url = 'http://localhost:3000/'
 			Email.send(
 				{
 					from: 'chris@desktimeapp.com'
 					to: 'cmalven@chrismalven.com'
 					subject: 'Meteor Test'
-					html: '<h1>This is a test</h1><p>This is a test of the meteor email system.</p>'
+					html: "<h1>You've been invited to a VoteBox: #{question}</h1><p>To participate in this vote please click the following link:</p><p><a href='#{url}vote/#{newVoteId}'>Participate in this vote</a>"
 				}
 			)
 

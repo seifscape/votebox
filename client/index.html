@@ -17,12 +17,47 @@
 
 <template name="main">
 	<h1>Your Votes</h1>
-	
+
+	{{> vote_issues}}
+
 	<ul class="vote-list">
 	{{#each votes}}
 		<li><a href="vote/{{_id}}" class="vote">{{question}}</a></li>
 	{{/each}}
 	</ul>
+</template>
+
+<template name="vote">
+	{{> vote_issues}}
+
+	{{#each votes}}
+		<h1>{{question}}</h1>
+		<h2>Created by: {{creator_email}}</h2>
+
+		{{#each_with_index options}}
+			<p class="vote-option {{#if has_vote}}is-chosen {{/if}}{{#if is_winner}}is-winner{{/if}}" data-option-index="{{index}}">{{option}}</p>
+		{{/each_with_index}}
+
+		<h2>Participants:</h2>
+
+		<ul class="vote-participant-list">
+			{{#each participants}}
+				<li {{#if has_user_voted}}class="has-voted"{{/if}}>
+					<span class="participant-email">{{email}}</span>
+				</li>
+			{{/each}}
+		</ul>
+	{{/each}}
+</template>
+
+<template name="vote_issues">
+	{{#unless is_registered_user}}
+		<p>Please create an account to get access to your votes.</p>
+	{{/unless}}
+
+	{{#if has_no_votes}}
+		<p>Nothing to see here.</p>
+	{{/if}}
 </template>
 
 <template name="admin">
@@ -66,27 +101,4 @@
 
 		<button type="button" class="create-vote-button">Create a New Vote</button>
 	</div>
-</template>
-
-<template name="vote">
-	{{#each votes}}
-
-		<h1>{{question}}</h1>
-		<h2>Created by: {{creator_email}}</h2>
-
-		{{#each_with_index options}}
-			<p class="vote-option {{#if has_vote}}is-chosen {{/if}}{{#if is_winner}}is-winner{{/if}}" data-option-index="{{index}}">{{option}}</p>
-		{{/each_with_index}}
-	{{/each}}
-
-	<h2>Participants:</h2>
-
-	<ul class="vote-participant-list">
-		{{#each participants}}
-			<li {{#if has_user_voted}}class="has-voted"{{/if}}>
-				<span class="participant-email">{{email}}</span>
-			</li>
-		{{/each}}
-	</ul>
-
 </template>

@@ -13,22 +13,28 @@ findUserVote = (userId, voteId) ->
 		return obj.id is userId
 
 getValidVoteUsers = (voteId) ->
-	vote = if voteId then Votes.findOne({_id: voteId}) else Votes.findOne()
+	vote = if voteId? then Votes.findOne({_id: voteId}) else Votes.findOne()
 	return if not vote?
 	validIdsArray = _.pluck vote.users, 'id'
 	return Meteor.users.find({_id: {$in: validIdsArray}})
 
-getValidVoteUserIds = ->
-	validUsers = getValidVoteUsers()
-	validIds = _.pluck validUsers, 'id'
+getUsersForVote = (voteId) ->
+	vote = if voteId? then Votes.findOne({_id: voteId}) else Votes.findOne()
+	return if not vote?
+	return vote.users
+
+getValidVoteUserIds = (voteId) ->
+	validUsers = getValidVoteUsers(voteId)
+	return if not validUsers?
+	validIds = _.pluck validUsers.fetch(), '_id'
 
 areAllVotesIn = () ->
-	allVotes = getValidVoteUsers()
+	allVotes = getUsersForVote()
 	return  _.every allVotes, (user) ->
 		user.vote?
 
 tabulateVotes = ->
-	allUsers = getValidVoteUsers()
+	allUsers = getUsersForVote()
 	allVotes = _.pluck allUsers, 'vote'
 
 	sortedVotes = _.sortBy allVotes, (val) ->
@@ -47,5 +53,8 @@ tabulateVotes = ->
 
 doesMajorityVoteExist = ->
 	voteTotals = tabulateVotes()
-	numUsers = getValidVoteUsers().length
-	return _.max(voteTotals) >= Math.ceil(numUsers / 2)
+	numUsers = getUsersForVote().length
+	return _.max(voteTotals) > Math.ceil(numUsers / 2)
+
+
+

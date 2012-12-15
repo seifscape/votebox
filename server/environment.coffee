@@ -2,11 +2,14 @@
 
 Meteor.publish 'votes', (vote_id) ->
   user = Meteor.users.findOne({_id: this.userId})
+
   return false if not user
+  userEmail = user.emails[0].address
+  
   if vote_id?
     return Votes.find({_id: vote_id, 'users.id': this.userId})
   else
-    return Votes.find({'users.id': this.userId})
+    return Votes.find({$or: [{'users.id': this.userId}, {'invited_user_emails': userEmail}]})
 
 
 # Publishing users
