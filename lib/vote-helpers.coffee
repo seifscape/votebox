@@ -54,7 +54,19 @@ tabulateVotes = ->
 doesMajorityVoteExist = ->
 	voteTotals = tabulateVotes()
 	numUsers = getUsersForVote().length
-	return _.max(voteTotals) > Math.ceil(numUsers / 2)
+	return _.max(voteTotals) >= Math.ceil(numUsers / 2)
 
+makeInvitedIntoParticipant = ->
+	# If user is signed in and their email is
+	# in the current votes invited list,
+	# remove them from invited and and them
+	# to the vote's users
 
-
+	vote = Votes.findOne({_id: Session.get('vote_id')})
+	user = Meteor.user()
+	return if not vote? or not user? or not user.emails?
+	invitedArray = vote.invited_user_emails
+	userEmail = user.emails[0].address
+	if _.contains invitedArray, userEmail
+		Meteor.call('removeEmailFromVote', Session.get('vote_id'), userEmail)
+		Meteor.call('addUserToVote', Session.get('vote_id'), Meteor.userId());

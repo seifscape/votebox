@@ -2,14 +2,13 @@
 
 Meteor.publish 'votes', (vote_id) ->
   user = Meteor.users.findOne({_id: this.userId})
-
   return false if not user
   userEmail = user.emails[0].address
-  
+
   if vote_id?
-    return Votes.find({_id: vote_id, 'users.id': this.userId})
+    return Votes.find({_id: vote_id, $or: [{'users.id': this.userId}, {'invited_user_emails': userEmail}]})
   else
-    return Votes.find({$or: [{'users.id': this.userId}, {'invited_user_emails': userEmail}]})
+    votes = Votes.find({$or: [{'users.id': this.userId}, {'invited_user_emails': userEmail}]})
 
 
 # Publishing users
@@ -22,30 +21,6 @@ Meteor.publish 'directory', (vote_id) ->
     return Meteor.users.find(_id: {$in: validIdsArray}, {fields: {emails: 1, profile: 1, name: 1}})
   else
     return Meteor.users.find({}, {fields: {emails: 1, profile: 1, name: 1}})
-
-
-# Bootstrap data
-
-Meteor.startup ->
-  unless Votes.find().count()
-    _.each [
-      {
-        question: 'What should we have for lunch?'
-        creator_id: '8bffafa7-8736-4c4b-968e-82900b82c266'
-        options: [
-          {
-            option: 'Indian'
-          }
-          {
-            option: 'Waffles'
-          }
-          {
-            option: 'Salad'
-          }
-        ]
-      }
-    ], (attributes) ->
-      Votes.insert(attributes)
 
 
 # Allowing

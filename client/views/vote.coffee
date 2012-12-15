@@ -18,6 +18,7 @@ Template.vote.has_user_voted = ->
 
 Template.vote.has_vote = ->
 	userVote = findUserVote(Meteor.userId())
+	return if not userVote
 	return userVote.vote? and Math.round(userVote.vote) is this.index
 
 Template.vote.is_winner = ->

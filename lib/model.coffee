@@ -1,4 +1,35 @@
 Meteor.methods
+	addUserToVote: (vote_id, user_id) ->	
+		if not this.userId
+			throw new Meteor.Error(403, 'You must be logged in to modify users')
+		
+		if Meteor.isServer
+			Votes.update(
+				{_id: vote_id},
+				{
+					$push: {
+						users: {
+							'id': user_id,
+							'vote': null
+						}
+					}
+				}
+			)
+
+	removeEmailFromVote: (vote_id, user_email) ->
+		if not this.userId
+			throw new Meteor.Error(403, 'You must be logged in to modify users')
+		
+		if Meteor.isServer
+			Votes.update(
+				{_id: vote_id, invited_user_emails: user_email},
+				{
+					$pull: {
+						invited_user_emails: user_email
+					}
+				}
+			)
+
 	setUserVote: (vote_id, user_id, vote_index) ->
 		# Prevent setting vote for other users
 		# if user_id is not Meteor.userId()

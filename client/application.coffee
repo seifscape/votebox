@@ -15,6 +15,7 @@ Meteor.Router.add
 
 	'/vote/:id': (id) ->
 		Session.set('vote_id', id[0])
+		makeInvitedIntoParticipant()
 		return 'vote'
 
 Meteor.startup ->
