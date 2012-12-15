@@ -1,3 +1,5 @@
+Votes = new Meteor.Collection('votes')
+
 Meteor.methods
 	addUserToVote: (vote_id, user_id) ->	
 		if not this.userId
