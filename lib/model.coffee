@@ -71,9 +71,6 @@ Meteor.methods
 		options = _.map optionsArray, (option) ->
 			return {option: option}
 
-		# TODO: Email addresses from participants array that already exist in
-		# VoteBox should be immediately added to users, rather than to 'invited_user_emails'.
-
 		users = []
 		invited_user_emails = []
 
