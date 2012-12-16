@@ -97,6 +97,7 @@ Meteor.methods
 
 			# When this is deployed to votebox.meteor.com you can comment out the following line
 			process.env.MAIL_URL = 'smtp://postmaster%40cmal.mailgun.org:3ldr22afg917@smtp.mailgun.org:587'
+			# TODO: Automatically set this URL based on environment
 			url = 'http://localhost:3000/'
 			Email.send(
 				{
