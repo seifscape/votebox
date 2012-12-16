@@ -7,6 +7,7 @@ A Meteor-based group voting app, built using:
 * [Stylus](http://learnboost.github.com/stylus/)
 * [Reactive Router](https://github.com/tmeasday/meteor-router)
 
+Check out the [wiki](https://github.com/cmalven/votebox/wiki) for more info on how it works.
 
 ## Install
 
