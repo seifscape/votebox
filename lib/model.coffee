@@ -34,6 +34,7 @@ Meteor.methods
 
 	setUserVote: (vote_id, user_id, vote_index) ->
 		# Prevent setting vote for other users
+		# Unless current user is the vote creator
 		# if user_id is not Meteor.userId()
 		#	throw new Meteor.Error(403, 'You can only set your own vote)	
 
