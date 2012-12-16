@@ -105,7 +105,7 @@ Meteor.methods
 					from: 'chris@desktimeapp.com'
 					to: 'cmalven@chrismalven.com'
 					subject: 'Meteor Test'
-					html: "<h1>You've been invited to a VoteBox: #{question}</h1><p>To participate in this vote please click the following link:</p><p><a href='#{url}vote/#{newVoteId}'>Participate in this vote</a>"
+					html: "<h1>You've been invited to a VoteBox: #{question}</h1><p>To participate in this vote please click the following link:</p><p><a href='#{url}vote/#{newVoteId}'>Participate in this vote</a><p><strong>What is VoteBox?</strong> VoteBox makes it easy for groups of any size to vote on any issue. Use it to pick a restaurant, plan an event, or to make an important decision.</p>"
 				}
 			)
 
