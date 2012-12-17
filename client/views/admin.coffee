@@ -39,8 +39,8 @@ Template.admin.events
 	'click .create-vote-button': (evt, template) ->
 		# Gather the values
 		question = $('.new-vote-question').val()
-		options = $('.new-vote-options').val().split(/[ ,]+/)
-		participants = $('.new-vote-participants').val().split(/[ ,]+/)
+		options = $('.new-vote-options').val().split(/,\s*/)
+		participants = $('.new-vote-participants').val().split(/,\s*/)
 
 		Meteor.call('createNewVote', question, options, participants)
 
