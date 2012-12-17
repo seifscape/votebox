@@ -3,18 +3,25 @@
 Template.admin.votes = ->
 	votes = Votes.find({creator_id: Meteor.userId()})
 
-Template.admin.participants = ->
-	getValidVoteUsers(this._id)
+Template.admin.participants_with_vote_data = ->
+	vote = this
+	participants = getValidVoteUsers(vote._id).fetch()
+	return if not participants?
 
-Template.admin.email = ->
-	this.emails[0].address
-
-Template.admin.is_selected_option = ->
-	# this refers to the user (id and email)
-	# we can get the current vote id from $('.option-select').attr('data-vote-id')
-	userVote = findUserVote(this._id)
-	return if not userVote?
-	userVote = if not userVote.vote? then null else userVote.vote
+	augumented_participants = _.map participants, (p) ->
+		optionIndex = 0;
+		{
+			_id: p._id
+			email: p.emails[0].address
+			options: _.map vote.options, (option) ->
+				option = {
+					option: option.option
+					is_selected_option: findUserVote(p._id, vote._id).vote is optionIndex
+				}
+				optionIndex++;
+				return option
+		}
+	return augumented_participants
 
 ## EVENTS
 
