@@ -18,6 +18,18 @@ Meteor.methods
 				}
 			)
 
+			# Add the user's email to the vote cretor's "Previously invited emails" list
+			vote = Votes.find({_id: vote_id})
+			userEmail = Meteor.users.find({_id: user_id}).emails[0].address
+			Meteor.users.update(
+				{_id: vote.creator_id},
+				{
+					$addToSet: {
+						previously_invited_emails: userEmail
+					}
+				}
+			)
+
 	removeEmailFromVote: (vote_id, user_email) ->
 		if not this.userId
 			throw new Meteor.Error(403, 'You must be logged in to modify users')
@@ -99,7 +111,7 @@ Meteor.methods
 			# When this is deployed to votebox.meteor.com you can comment out the following line
 			process.env.MAIL_URL = 'smtp://postmaster%40cmal.mailgun.org:3ldr22afg917@smtp.mailgun.org:587'
 			# TODO: Automatically set this URL based on environment
-			url = 'http://localhost:3000/'
+			url = 'http://votebox.meteor.com/'
 			Email.send(
 				{
 					from: 'chris@desktimeapp.com'
